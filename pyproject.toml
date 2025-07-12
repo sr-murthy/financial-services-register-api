@@ -1,0 +1,208 @@
+[project]
+
+# PEP 621 project metadata
+# See https://www.python.org/dev/peps/pep-0621/
+
+# For the standard reference on Python packaging, including using
+# ``pyproject.toml`` for build definition and configuration see:
+#
+#     https://packaging.python.org/en/latest/tutorials/packaging-projects/
+#
+name = "fs-register-api-client"
+description = "Lightweight Python client library for the UK Financial Services Register RESTful API"
+
+authors = [
+    {name = "S. R. Murthy", email = "s.murthy@tutanota.com"},
+]
+
+maintainers = [
+  {name = "S. R. Murthy", email = "s.murthy@tutanota.com"}
+]
+
+dynamic = ["version"]
+
+requires-python = ">=3.11"
+
+license = {file = "LICENSE"}
+
+dependencies = [
+    "requests",
+]
+
+readme = "README.md"
+
+keywords = [
+    "financial conduct authority",
+    "financial data",
+    "financial regulation",
+    "financial services",
+    "financial services register",
+    "prudential regulation authority",
+    "regulated markets",
+    "restful api",
+    "uk",
+]
+
+classifiers = [
+        "Environment :: Console",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Development Status :: 5 - Production/Stable",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: MacOS",
+        "Operating System :: Microsoft :: Windows",
+]
+
+[project.optional-dependencies]
+user = [
+    "jupyter",
+]
+
+[project.scripts]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project.urls]
+Homepage = "https://fs-register-api-client.readthedocs.io/index.html"
+Documentation = "https://fs-register-api-client.readthedocs.io"
+Repository = "https://github.com/sr-murthy/fs-register-api-client"
+
+# For working with PDM, including configuration and usage see:
+#
+#     https://pdm.fming.dev/latest/
+#     https://pdm.fming.dev/latest/reference/pep621/
+#     https://pdm.fming.dev/latest/reference/cli/
+#
+[tool.pdm]
+distribution = true
+
+[tool.pdm.build]
+package-dir = "src"
+includes = [
+    "src/fs-register-api-client",
+]
+# File patterns to exclude, the paths are relative to the project root.
+excludes = [
+    "docs",
+    "build",
+    "dist",
+    "tests",
+    ".pytest_cache",
+    "*.pyc",
+    "*.env",
+    "*__pycache__*",
+]
+source-includes = [
+    "README.md",
+]
+editable-backend = "path"
+
+[tool.pdm.dev-dependencies]
+build = [
+    "pip>=23.1.2",
+    "twine",
+]
+docs = [
+    "myst-parser",
+    "furo",
+    "Sphinx",
+    "sphinx-autobuild",
+    "sphinx-copybutton",
+    "pylint>=2.17.5",
+    "nb2plots>=0.7.1",
+    "sphinx-gallery>=0.14.0",
+    "jupyter-sphinx>=0.4.0",
+    "numpydoc>=1.5.0",
+    "sphinx-design>=0.5.0",
+]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "coverage",
+    "ipython",
+    "ipdb",
+    "virtualenv",
+]
+lint = [
+    "ruff",
+]
+test = [
+    "coverage[toml]",
+    "pytest",
+    "pytest-cov",
+]
+
+[tool.pdm.scripts]
+lint = {shell = "make lint", help = "Lint source with Ruff"}
+doctests = {shell = "make doctests", help = "Run doctests"}
+unittests = {shell = "make unittests", help = "Run unit tests & measure coverage"}
+
+[tool.pdm.version]
+source = "file"
+path = "src/fs-register-api-client/__version__.py"
+
+# For ``pytest`` configuration, including TOML-specific configuration see:
+#
+#     https://docs.pytest.org/en/7.3.x/reference/customize.html#configuration
+#     https://docs.pytest.org/en/7.3.x/reference/customize.html#pyproject-toml
+#
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+addopts = """\
+    --cache-clear \
+    --code-highlight=yes \
+    --color=yes \
+    --cov=src \
+    --cov-config=pyproject.toml \
+    --cov-report=xml \
+    --cov-report=html \
+    -ra \
+    --tb=native \
+    --verbosity=3 \
+"""
+filterwarnings = [
+    "ignore::DeprecationWarning"
+]
+python_files = ["test_*.py",]
+python_classes = ["Test", "Acceptance",]
+python_functions = ["test"]
+testpaths = [
+    "tests/",
+]
+markers = [
+    # Test tags/labels/markers - not using any currently
+]
+
+# For ``coverage`` configuration see the reference from version ``7.4.1``:
+#
+#     https://coverage.readthedocs.io/en/7.4.1/config.html
+#
+[tool.coverage.run]
+branch = true
+omit = [
+    "./build",
+    "./dist",
+    "./docs",
+    "*/tests*",
+    ".pytest_cache",
+    "*.pyc",
+    "*.env",
+    "*__pycache__*",
+    "__version__.py"
+]
+source = ["src"]
+
+[tool.coverage.report]
+precision = 3
+show_missing = true
+skip_covered = true
+skip_empty = true
+sort = "Name"
