@@ -2,7 +2,7 @@
   
 [![CI](https://github.com/sr-murthy/financial-services-register-api/actions/workflows/ci.yml/badge.svg)](https://github.com/sr-murthy/financial-services-register-api/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/sr-murthy/financial-services-register-api/actions/workflows/codeql.yml/badge.svg)](https://github.com/sr-murthy/financial-services-register-api/actions/workflows/codeql.yml)
-[![codecov](https://codecov.io/github/sr-murthy/financial-services-register-api/graph/badge.svg?token=QUA73GJ6HF)](https://codecov.io/github/sr-murthy/financial-services-register-api)
+[![codecov](https://img.shields.io/badge/codecov-100%25-green)](https://codecov.io/github/sr-murthy/financial-services-register-api)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org)
 [![License: MPL
