@@ -8,11 +8,8 @@
 [![License: MPL
 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 [![Docs](https://readthedocs.org/projects/financial-services-register-api/badge/?version=latest)](https://financial-services-register-api.readthedocs.io/en/latest/?badge=latest)
-<a href="https://trackgit.com">
-<img src="https://us-central1-trackgit-analytics.cloudfunctions.net/token/ping/m45fbfbm6zgkqmfudv6m" alt="trackgit-views" />
-</a>
 [![PyPI version](https://img.shields.io/pypi/v/financial-services-register-api?logo=python&color=41bb13)](https://pypi.org/project/financial-services-register-api)
-![PyPI Downloads](https://static.pepy.tech/badge/financial-services-register-api)
+![PyPI Downloads](https://static.pepy.tech/badge/fsrapiclient)
 
 </div>
 
