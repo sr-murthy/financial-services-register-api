@@ -68,8 +68,8 @@ requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [project.urls]
-Homepage = "https://github.com/sr-murthy/financial-services-register-api"
-Documentation = "https://github.com/sr-murthy/financial-services-register-api"
+Homepage = "https://financial-services-register-api.readthedocs.io/en/latest/"
+Documentation = "https://financial-services-register-api.readthedocs.io/en/latest/"
 Repository = "https://github.com/sr-murthy/financial-services-register-api"
 
 # For working with PDM, including configuration and usage see:
