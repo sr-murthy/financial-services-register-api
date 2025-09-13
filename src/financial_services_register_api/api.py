@@ -201,10 +201,9 @@ class FinancialServicesRegisterApiClient:
     >>> assert res.resultinfo
     >>> client.search_frn("Hastings Insurance Services Limited")
     '311492'
-    >>> client.search_frn('direct line')
-    Traceback (most recent call last):
-    ...
-    financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: Multiple firms returned. The firm name needs to be more precise. If you are unsure of the results please use the common search endpoint.
+    >>> res = client.search_frn('direct line')
+    >>> assert isinstance(res, list)
+    >>> assert (isinstance(rec, dict) for rec in res)
     >>> client.search_frn('direct line insurance plc')
     '202684'
     >>> assert client.get_firm('122702').data
@@ -334,8 +333,8 @@ class FinancialServicesRegisterApiClient:
         except requests.RequestException as e:
             raise FinancialServicesRegisterApiRequestException(e)
 
-    def _search_ref_number(self, resource_name: str, resource_type: str) -> str:
-        """:py:class:`str`: A private base handler for public methods for searching for unique firm, individual and product reference numbers.
+    def _search_ref_number(self, resource_name: str, resource_type: str, /) -> str | list[dict[str, str]]:
+        """:py:class:`str` or :py:class:`list`: A private base handler for public search methods for unique firm, individual and product reference numbers.
 
         .. note::
 
@@ -348,11 +347,14 @@ class FinancialServicesRegisterApiClient:
             /V0.1/Search?q=resource_name&type=resource_type
 
         to perform a case-insensitive search for resources of type
-        ``resource_type`` in the FS Register on the given resource name
-        substring.
+        ``resource_type`` in the Financial Services Register on the given
+        resource name substring.
 
         Returns a non-null string of the resource ref. number if there is
-        a unique associated resource.
+        a unique associated resource. Otherwise returns :py:class.
+
+        If there are multiple resources matching the given resource name
+        substring then a JSON array of the matching records is returned.
 
 
         Parameters
@@ -362,21 +364,26 @@ class FinancialServicesRegisterApiClient:
             The name needs to be precise enough to guarantee a unique return
             value, otherwise multiple records exist and an exception is raised.
 
+        resource_type : str
+            The resource type, which should be one of ``'firm'``,
+            ``'individual'``, or ``'fund'``.
+
+        Returns
+        -------
+        str, list
+            The unique resource reference number, if found. Otherwise
+            a JSON array of matching records.
+
         Raises
         ------
         ValueError
             If the resource type is not of ``'firm'``, ``'individual'``, or
             ``'fund'``. 
         FinancialServicesRegisterApiRequestException
-            If there was a request exception from calling the common search
-            handler.
-        FinancialServicesRegisterApiException
-            If there was an error in the API response or in processing the response.
-
-        Returns
-        -------
-        str
-            The unique resource reference number, if found.
+            If there was an API request exception.
+        FinancialServicesRegisterApiResponseException
+            If the API response does not conform to the expected structure, or
+            no data was found for the given resource type and name.
         """
         if resource_type not in API_CONSTANTS.RESOURCE_TYPES.value:
             raise ValueError(
@@ -390,54 +397,51 @@ class FinancialServicesRegisterApiClient:
             raise
 
         if res.ok and res.data:
+            if len(res.data) == 1:
+                try:
+                    return res.data[0]['Reference Number']
+                except KeyError:
+                    raise FinancialServicesRegisterApiResponseException(
+                        'Unexpected response data structure from the API for '
+                        f'{resource_type} search by name "{resource_name}"! '
+                        'Please check the API developer documentation at '
+                        f'{API_CONSTANTS.DEVELOPER_PORTAL.value}.'
+                    )
             if len(res.data) > 1:
-                raise FinancialServicesRegisterApiResponseException(
-                    f'Multiple {resource_type}s returned. The {resource_type} '
-                     'name needs to be more precise. If you are unsure of the '
-                     'results please use the common search endpoint.'
-                )
-
-            try:
-                return res.data[0]['Reference Number']
-            except (KeyError, IndexError):
-                raise FinancialServicesRegisterApiResponseException(
-                    'Unexpected response data structure from the FS Register '
-                    f'API for general {resource_type} search by name! Please '
-                    'check the FS Register API developer documentation at '
-                    'https://register.fca.org.uk/Developer/s/.'
-                )
+                return res.data
+        elif not res.ok:
+            raise FinancialServicesRegisterApiRequestException(
+                f'API search request failed for an unknown reason: '
+                f'{res.reason}. Please check the search parameters and try again.'
+            )
         elif not res.data:
-            raise FinancialServicesRegisterApiResponseException(
-                'No data found in FS Register API response. Please check the search '
+            raise FinancialServicesRegisterApiRequestException(
+                'No data found in the API response. Please check the search '
                 'parameters and try again.'
             )
-        else:
-            raise FinancialServicesRegisterApiResponseException(
-                f'FS Register API search request failed for some other reason: '
-                f'{res.reason}.'
-            )
 
-    def search_frn(self, firm_name: str) -> str:
-        """:py:class:`str`: Returns the unique firm reference number (FRN) of a given firm, if found.
+    def search_frn(self, firm_name: str) -> str | list[dict[str, str]]:
+        """:py:class:`str` or :py:class:`list`: Returns the unique firm reference number (FRN) of a given firm, if found, or else a JSON array of matching records.
 
         Calls the private method
         :py:meth:`~financial_services_register_api.FinancialServicesRegisterApiClient._search_ref_number` to do the
         search.
 
         Returns a non-null string of the FRN if there is a unique associated
-        firm.
+        firm. Otherwise, a JSON array of all matching records is returned.
 
         Parameters
         ----------
         firm_name : str
-            The firm name - need not be in any particular case. The name
-            needs to be precise enough to guarantee a unique return value,
-            otherwise multiple records exist and an exception is raised.
+            The firm name (case insensitive). The name needs to be precise
+            enough to guarantee a unique return value, otherwise a JSON array
+            of all matching records are returned.
 
         Returns
         -------
         str
-            A string version of the firm reference number (FRN), if found.
+            A string version of the firm reference number (FRN), if found, or
+            a JSON array of all matching records.
 
         Examples
         --------
@@ -447,22 +451,15 @@ class FinancialServicesRegisterApiClient:
         '311492'
         >>> client.search_frn('hiscox insurance company limited')
         '113849'
-        >>> client.search_frn('direct line')
-        Traceback (most recent call last):
-        ...
-        financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: Multiple firms returned. The firm name needs to be more precise. If you are unsure of the results please use the common search endpoint.
-        >>> client.search_frn('direct line insurance')
-        Traceback (most recent call last):
-        ...
-        financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: Multiple firms returned. The firm name needs to be more precise. If you are unsure of the results please use the common search endpoint.
-        >>> client.search_frn('direct line insurance plc')
-        '202684'
-        >>> client.search_frn('Hiscxo Insurance Company')
-        Traceback (most recent call last):
-        ...
-        financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: No data found in FS Register API response. Please check the search parameters and try again.
+        >>> res = client.search_frn('direct line')
+        >>> assert isinstance(res, list)
+        >>> assert all(isinstance(rec, dict) for rec in res)
         >>> client.search_frn('hiscox insurance company')
         '113849'
+        >>> client.search_frn('nonexistent company')
+        Traceback (most recent call last):
+        ...
+        financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException: No data found in the API response. Please check the search parameters and try again.
         """
         return self._search_ref_number(
             firm_name,
@@ -1160,41 +1157,29 @@ class FinancialServicesRegisterApiClient:
             modifiers=('AR',)
         )
 
-    def search_irn(self, individual_name: str) -> str:
-        """:py:class:`str`: Returns the unique individual reference number (IRN) of a given individual, if found.
+    def search_irn(self, individual_name: str) -> str | list[dict[str, str]]:
+        """:py:class:`str` or :py:class:`list`: Returns the unique individual reference number (IRN) of a given individual, if found, or else a JSON array of matching records.
 
-        Uses the API common search endpoint:
-        ::
-
-            /V0.1/Search?q=<individual name>&type=individual
-
-        to perform a case-insensitive individual-type search in the FS Register on the
-        given name.
+        Calls the private method
+        :py:meth:`~financial_services_register_api.FinancialServicesRegisterApiClient._search_ref_number`
+        to do the search.
 
         Returns a non-null string of the IRN if there is a unique associated
-        individual.
+        individual. Otherwise, a JSON array of all matching records is
+        returned.
 
         Parameters
         ----------
-        individual_name : str
-            The individual name - need not be in any particular case. The name
-            needs to be precise enough to guarantee a unique return value,
-            otherwise multiple records exist and an exception is raised.
-
-        Raises
-        ------
-        FinancialServicesRegisterApiRequestException
-            If there was a request exception from calling the common search
-            handler.
-
-        FinancialServicesRegisterApiException
-            If there was an error in the API response or in processing the response.
+        firm_name : str
+            The individual name (case insensitive). The name needs to be precise
+            enough to guarantee a unique return value, otherwise a JSON array
+            of all matching records are returned.
 
         Returns
         -------
         str
-            A string version of the individual reference number (IRN), if
-            found.
+            A string version of the individual reference number (IRN), if found, or
+            a JSON array of all matching records.
 
         Examples
         --------
@@ -1204,14 +1189,13 @@ class FinancialServicesRegisterApiClient:
         'MXC29012'
         >>> client.search_irn('mark Carney')
         'MXC29012'
-        >>> client.search_irn('Mark C')
+        >>> res = client.search_irn('Mark C')
+        >>> assert isinstance(res, list)
+        >>> assert all(isinstance(rec, dict) for rec in res)
+        >>> client.search_irn('nonexistent individual')
         Traceback (most recent call last):
         ...
-        financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: Multiple individuals returned. The individual name needs to be more precise. If you are unsure of the results please use the common search endpoint.
-        >>> client.search_irn('A Nonexistent Person')
-        Traceback (most recent call last):
-        ...
-        financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: No data found in FS Register API response. Please check the search parameters and try again.
+        financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException: No data found in the API response. Please check the search parameters and try again.
         """
         return self._search_ref_number(
             individual_name,
@@ -1336,60 +1320,42 @@ class FinancialServicesRegisterApiClient:
             modifiers=('DisciplinaryHistory',)
         )
 
-    def search_prn(self, fund_name: str) -> str:
-        """:py:class:`str` : Returns the unique product reference number (PRN) of a given fund or collective investment scheme (CIS), including subfunds, if it exists.
+    def search_prn(self, fund_name: str) -> str | list[dict[str, str]]:
+        """:py:class:`str` or :py:class:`list`: Returns the unique product reference number (PRN) of a given fund, if found, or else a JSON array of matching records.
 
-        Uses the API common search endpoint:
-        ::
-
-            /V0.1/Search?q=<fund name>&type=fund
-
-        to perform a case-insensitive fund-type search in the FS Register on
-        the given name.
+        Calls the private method
+        :py:meth:`~financial_services_register_api.FinancialServicesRegisterApiClient._search_ref_number`
+        to do the search.
 
         Returns a non-null string of the PRN if there is a unique associated
-        fund.
+        fund. Otherwise, a JSON array of all matching records is returned.
 
         Parameters
         ----------
-        fund_name : str
-            The fund name - need not be in any particular case. The name needs
-            to be precise enough to guarantee a unique return value, otherwise
-            multiple records exist and an exception is raised.
-
-        Raises
-        ------
-        FinancialServicesRegisterApiRequestException
-            If there was a request exception from calling the common search
-            handler.
-
-        FinancialServicesRegisterApiResponseException
-            If there was an error in the API response or in processing the
-            response.
+        firm_name : str
+            The fund name (case insensitive). The name needs to be precise
+            enough to guarantee a unique return value, otherwise a JSON array
+            of all matching records are returned.
 
         Returns
         -------
         str
-            A string version of the product reference number (PRN), if found.
+            A string version of the product reference number (PRN), if found, or
+            a JSON array of all matching records.
 
         Examples
         --------
         >>> import os
         >>> client = FinancialServicesRegisterApiClient(os.environ['API_USERNAME'], os.environ['API_KEY'])
-        >>> client.search_prn('Northern Trust')
-        Traceback (most recent call last):
-        ...
-        financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: Multiple funds returned. The fund name needs to be more precise. If you are unsure of the results please use the common search endpoint.
-        >>> client.search_prn('Northern Trust High Dividend ESG World Equity')
-        Traceback (most recent call last):
-        ...
-        financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: Multiple funds returned. The fund name needs to be more precise. If you are unsure of the results please use the common search endpoint.
         >>> client.search_prn('Northern Trust High Dividend ESG World Equity Feeder Fund')
         '913937'
-        >>> client.search_prn('A nonexistent fund')
+        >>> res = client.search_prn('Northern Trust')
+        >>> assert isinstance(res, list)
+        >>> assert all(isinstance(rec, dict) for rec in res)
+        >>> client.search_prn('nonexistent fund')
         Traceback (most recent call last):
         ...
-        financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException: No data found in FS Register API response. Please check the search parameters and try again.
+        financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException: No data found in the API response. Please check the search parameters and try again.
         """
         return self._search_ref_number(
             fund_name,
@@ -1593,7 +1559,7 @@ class FinancialServicesRegisterApiClient:
 if __name__ == "__main__":      # pragma: no cover
     # Doctest the module from the project root using
     #
-    #     export API_USERNAME=<API username> && export API_KEY=<API key> && python -m doctest -v src/financial_services_register_api/api.py && unset API_USERNAME && unset API_KEY
+    #     export API_USERNAME=<API username> && export API_KEY=<API key> && PYTHONPATH=src python -m doctest -v src/financial_services_register_api/api.py && unset API_USERNAME && unset API_KEY
     #
     import doctest
     doctest.testmod()

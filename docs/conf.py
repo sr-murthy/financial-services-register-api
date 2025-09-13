@@ -76,9 +76,8 @@ rst_epilog = f"""
 # Publish author(s)
 show_authors = True
 
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
+# Sphinx extensions: not all of these are used or required, but they are still
+# listed here if requirements change.
 extensions = ['jupyter_sphinx',
               'matplotlib.sphinxext.plot_directive',
               'myst_parser',
@@ -106,10 +105,10 @@ extensions = ['jupyter_sphinx',
 #     For more on all available autodoc defaults see
 #         https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autodoc_default_options
 autodoc_default_options = {
-    'exclude-members': '__call__,__weakref__,__slots__,__match_args__',
+    'exclude-members': '',
     'member-order': 'bysource',
-    'private-members': True,
-    'special-members': '__eq__, __init__, __new__'
+    'private-members': False,
+    'special-members': '__init__,__new__'
 }
 
 # Sphinx autodoc autosummary settings
@@ -122,24 +121,10 @@ numpydoc_class_members_toctree = False
 numpydoc_attributes_as_param_list = False
 numpydoc_xref_param_type = False
 
-# Intersphinx mappings to reference external documentation domains
-intersphinx_mapping = {
-    'coverage': ('https://coverage.readthedocs.io/en/7.3.1/', None),
-    'matplotlib': ('https://matplotlib.org/stable/', None),
-    'networkx': ('https://networkx.org/documentation/stable/', None),
-    'numpy':  ('https://numpy.org/doc/stable/', None),
-    'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
-    'pdm': ('https://pdm-project.org/latest/', None),
-    'pygraphviz': ('https://pygraphviz.github.io/documentation/stable/', None),
-    'pytest': ('https://docs.pytest.org/en/7.4.x/', None),
-    'python': ('https://docs.python.org/3', None),
-    'requests': ('https://requests.readthedocs.io/en/latest/', None),
-    'scipy': ('https://docs.scipy.org/doc/scipy/', None),
-    'sympy': ('https://docs.sympy.org/latest/', None),
-    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
-}
+# Intersphinx mappings to reference external documentation domains - none required.
+intersphinx_mapping = {}
 
-# Add any paths that contain templates here, relative to this directory.
+# Static template paths
 templates_path = ['_templates']
 
 # The suffix of source filenames.

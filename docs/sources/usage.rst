@@ -33,11 +33,11 @@ storing the API username (signup email) and API key. These, and also the API ver
    >>> client.api_version
    'V0.1'
 
-Almost all public client methods return :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse` objects, which have four properties specific to the FS Register API:
+Almost all public client methods return :py:class:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse` objects, which have four properties specific to the API:
 
-- :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.status` - an FS Register-specific status indicator for the
+- :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.status` - an API-specific status indicator for the
   request
-- :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.message` - an FS Register-specific status message for the
+- :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.message` - an API-specific status message for the
   request
 - :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.data` - the response data
 - :py:attr:`~financial_services_register_api.api.FinancialServicesRegisterApiResponse.resultinfo` - pagination information for the response data
@@ -172,48 +172,41 @@ The client implements a `regulated markets <https://www.handbook.fca.org.uk/hand
 Searching for FRNs, IRNs and PRNs
 =================================
 
-Generally, firm reference numbers (FRN), individual reference numbers (IRN), and product reference numbers (PRN), may not be known in advance. These can be found via the following client search methods, which return strings if the searches are successful:
+Generally, firm reference numbers (FRN), individual reference numbers (IRN), and product reference numbers (PRN), may not be known in advance. These can be found via the following client search methods, which return strings in the case of unique matches, or a JSON arrays of matching records if there are non-unique matches:
 
 - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.search_frn()` - case-insensitive search for FRNs
 - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.search_irn()` - case-insensitive search for IRNs
 - :py:meth:`~financial_services_register_api.api.FinancialServicesRegisterApiClient.search_prn()` - case-insensitive search for PRNs
 
-All three methods trigger an :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException` in case of non-unique, multiple results, or no data.
+These methods do not directly raise any exceptions, but may indirectly incur the following exceptions: a :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException` in the case of bad searches, or a :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException` in the case of non-standard or malformed responses with possibly no data.
 
-FRNs, IRNs, and PRNs are associated with unique firms, individuals, and funds, respectively, in the FS Register, whether current or past. The more precise the name substring the more likely is an exact, unique result. Some examples are given below for each type of search, starting with FRNs:
+FRNs, IRNs, and PRNs are associated with unique firms, individuals, and funds, respectively, in the Register, whether current or past. The more precise the name substring the more likely is an exact, unique result. Some examples are given below for each type of search, starting with FRNs:
 
 .. code:: python
 
    >>> client.search_frn('hiscox insurance company limited')
    '113849'
 
-Imprecise names in the search can produce multiple records, and will trigger an :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException` indicating the problem, e.g.:
+Imprecise or inadequality specified names in the search can produce non-unique matches, in which all matching records are returned in a JSON array, for example:
 
 .. code:: python
 
    >>> client.search_frn('hiscox')
-   Traceback (most recent call last):
-   ...
-   financial_services_register_api.api.FinancialServicesRegisterApiResponseException: Multiple firms returned. Firm name needs to be more precise. If you are unsure of the results please use the common search endpoint
-
-In this case the exception was generated because a common search for ``'hiscox'`` shows that there are multiple firms entries containing this name fragment:
-
-.. code:: python
-
-   >>> client.common_search(urlencode({'q': 'hiscox', 'type': 'firm'})).data
    [{'URL': 'https://register.fca.org.uk/services/V0.1/Firm/812274',
      'Status': 'No longer authorised',
      'Reference Number': '812274',
      'Type of business or Individual': 'Firm',
      'Name': 'HISCOX ASSURE'},
-   ...
+    ...
+    ...
     {'URL': 'https://register.fca.org.uk/services/V0.1/Firm/732312',
      'Status': 'Authorised',
      'Reference Number': '732312',
      'Type of business or Individual': 'Firm',
-     'Name': 'Hiscox MGA Ltd (Postcode: EC2N 4BQ)'}]
+     'Name': 'Hiscox MGA Ltd (Postcode: EC2N 4BQ)'}
+   ]
 
-Searches for non-existent firms will trigger an :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiResponseException` indicating that no data found in the FS Register for the given name:
+Searches for non-existent firms will trigger an :py:class:`~financial_services_register_api.exceptions.FinancialServicesRegisterApiRequestException` indicating that no data found in the Register for the given name:
 
 .. code:: python
 
@@ -230,9 +223,18 @@ A few examples are given below of IRN searches.
    'MXC29012'
    #
    >>> client.search_irn('mark c')
-   Traceback (most recent call last):
-   ...
-   financial_services_register_api.api.FinancialServicesRegisterApiResponseException: Multiple individuals returned. The individual name needs to be more precise. If you are unsure of the results please use the common search endpoint
+   [{'URL': 'https://register.fca.org.uk/services/V0.1/Individuals/MWC01033',
+     'Status': 'Active',
+     'Reference Number': 'MWC01033',
+     'Type of business or Individual': 'Individual',
+     'Name': 'Mark William Cowell'},
+    ...
+    ...
+    {'URL': 'https://register.fca.org.uk/services/V0.1/Individuals/RMG01106',
+     'Status': 'Active',
+     'Reference Number': 'RMG01106',
+     'Type of business or Individual': 'Individual',
+     'Name': 'Richard Mark Greenfield'}]
    #
    >>> client.search_irn('a nonexistent individual')
    Traceback (most recent call last):
@@ -247,9 +249,18 @@ A few examples are given below of PRN searches.
    '635641'
    #
    >>> client.search_prn('jupiter asia')
-   Traceback (most recent call last):
-   ...
-   financial_services_register_api.api.FinancialServicesRegisterApiResponseException: Multiple funds returned. The fund name needs to be more precise. If you are unsure of the results please use the common search endpoint
+   [{'URL': 'https://register.fca.org.uk/services/V0.1/CIS/718428',
+     'Status': 'Authorised',
+     'Reference Number': '718428',
+     'Type of business or Individual': 'Collective investment scheme',
+     'Name': 'Jupiter Asian Income Fund'},
+    ...
+    ...
+    {'URL': 'https://register.fca.org.uk/services/V0.1/CIS/140620',
+     'Status': 'Terminated',
+     'Reference Number': '140620',
+     'Type of business or Individual': 'Collective investment scheme',
+     'Name': 'JUPITER ASIAN FUND'}]
    #
    >>> client.search_prn('a nonexistent fund')
    Traceback (most recent call last):
