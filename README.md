@@ -20,7 +20,7 @@
 
 A lightweight Python client library for the UK [Financial Services Register](https://register.fca.org.uk/s/) [RESTful API](https://register.fca.org.uk/Developer/s/).
 
-The [PyPI package](https://pypi.org/project/financial-services-register-api) is currently at version `1.0.0`.
+The [PyPI package](https://pypi.org/project/financial-services-register-api) is currently at version `1.1.0`.
 
 > [!NOTE]
 > The new package `financial-services-register-api` supersedes the older package `fsrapiclient`, which will no longer be published. Existing versions of the older package may be retracted in the future. Please use the new package.

@@ -158,7 +158,7 @@ and the `CodeQL Analysis YML <https://github.com/sr-murthy/financial-services-re
 Versioning and Releases :fas:`upload`
 =====================================
 
-The `PyPI package <https://pypi.org/project/financial-services-register-api/>`_ is currently at version ``1.0.0``.
+The `PyPI package <https://pypi.org/project/financial-services-register-api/>`_ is currently at version ``1.1.0``.
 
 There is currently no dedicated pipeline for releases - both `GitHub releases <https://github.com/sr-murthy/financial-services-register-api/releases>`_ and `PyPI packages <https://pypi.org/project/financial-services-register-api>`_ are published manually, but both have the same version tag.
 
