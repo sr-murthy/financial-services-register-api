@@ -26,6 +26,7 @@ class FINANCIAL_SERVICES_REGISTER_API_CONSTANTS(Enum):
 
     API_VERSION = 'V0.1'
     BASEURL = f'https://register.fca.org.uk/services/{API_VERSION}'
+    DEVELOPER_PORTAL = 'https://register.fca.org.uk/Developer/s/'
     RESOURCE_TYPES = {
         'firm': {'type_name': 'firm', 'endpoint_base': 'Firm'},
         'fund': {'type_name': 'fund', 'endpoint_base': 'CIS'},

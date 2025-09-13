@@ -56,7 +56,7 @@ According to the `API documentation <https://register.fca.org.uk/Developer/s/>`_
 Firm Requests
 =============
 
-Firms in the FS Register are identified by unique firm reference numbers (FRN). The following table summarises firm-specific API endpoints. For further details consult the `API documentation <https://register.fca.org.uk/Developer/s/>`_.
+Firms in the Register are identified by unique firm reference numbers (FRN). The following table summarises firm-specific API endpoints. For further details consult the `API documentation <https://register.fca.org.uk/Developer/s/>`_.
 
 .. list-table::
    :align: left
@@ -121,7 +121,7 @@ For details and examples on calling these endpoints via this library see :ref:`t
 Individual Requests
 ===================
 
-Individuals associated with firms in the FS Register are identified by unique individual reference numbers (IRN). The following table summarises individual-specific API endpoints.
+Individuals associated with firms in the Register are identified by unique individual reference numbers (IRN). The following table summarises individual-specific API endpoints.
 
 .. list-table::
    :align: left
@@ -152,7 +152,7 @@ For how to call these endpoints see :ref:`this <usage.individuals>`.
 Fund Requests
 =============
 
-Funds, also referred to as collective investment schemes (CIS) in the FS Register, are identified by unique product reference numbers (PRN). The following table summarises fund-specific API endpoints.
+Funds, also referred to as collective investment schemes (CIS) in the Register, are identified by unique product reference numbers (PRN). The following table summarises fund-specific API endpoints.
 
 .. list-table::
    :align: left

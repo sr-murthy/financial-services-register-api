@@ -8,4 +8,4 @@
 
 .. automodule:: financial_services_register_api.api
     :members:
-    :private-members:
+    :special-members:
