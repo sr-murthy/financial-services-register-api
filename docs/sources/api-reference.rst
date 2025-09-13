@@ -8,13 +8,13 @@
 API Reference
 =============
 
-``fs-register-api-client`` API reference.
+``financial-services-register-api`` API reference.
 
 .. toctree::
    :maxdepth: 1
    :name: api_reference_mastertoc
    :caption: Contents:
 
-   fs_register_api_client/constants
-   fs_register_api_client/exceptions
-   fs_register_api_client/api
+   financial_services_register_api/constants
+   financial_services_register_api/exceptions
+   financial_services_register_api/api

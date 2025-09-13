@@ -28,9 +28,8 @@ sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.dirname(os.path.abspath('.')))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath('.')), 'src'))
 
-import fs_register_api_client
-
-from fs_register_api_client.__version__ import __version__
+import financial_services_register_api
+from financial_services_register_api.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -41,10 +40,10 @@ description = """
               Lightweight Python client for the UK Financial Services Register RESTful API.
               """
 github_url = 'https://github.com'
-github_repo = f'{github_url}/sr-murty/fs-register-api-client'
+github_repo = f'{github_url}/sr-murty/financial-services-register-api'
 github_version = 'main'
-pypi_project = 'https://pypi.org/project/fs-register-api-client/'
-project = fs_register_api_client.__name__
+pypi_project = 'https://pypi.org/project/financial-services-register-api/'
+project = financial_services_register_api.__name__
 release = __version__
 
 # -- General configuration ---------------------------------------------------
@@ -70,8 +69,8 @@ rst_epilog = f"""
 .. |project|                replace:: **{project}**
 .. |project_description|    replace:: {description}
 .. |release|                replace:: **{release}**
-.. |github_release_target|  replace:: https://github.com/sr-murthy/fs-register-api-client/releases/tag/{release}
-.. |pypi_release_target|    replace:: https://pypi.org/project/fs-register-api-client/{release}
+.. |github_release_target|  replace:: https://github.com/sr-murthy/financial-services-register-api/releases/tag/{release}
+.. |pypi_release_target|    replace:: https://pypi.org/project/financial-services-register-api/{release}
 """
 
 # Publish author(s)
@@ -160,9 +159,9 @@ exclude_patterns = ['_build',
 pygments_style = 'sphinx'
 
 # A list of prefixes that are ignored when creating the module index. (new in Sphinx 0.6)
-modindex_common_prefix = ["fs_register_api_client."]
+modindex_common_prefix = ["financial_services_register_api."]
 
-doctest_global_setup = "import fs_register_api_client"
+doctest_global_setup = "import financial_services_register_api"
 
 # If this is True, the ``todo`` and ``todolist`` extension directives
 # produce output, else they produce nothing. The default is ``False``.
@@ -178,56 +177,25 @@ html_context = {
     'display_github': True,
     'github_url': 'https://github.com',
     'github_user': 'sr-murthy',
-    'github_repo': 'fs-register-api-client',
+    'github_repo': 'financial-services-register-api',
     'github_version': 'main',
     'doc_path': 'docs',
     'conf_path': 'docs/conf.py',
     'project': project,
     'project_description': description,
     'release': release,
-    'release_target': f'https://github.com/sr-murthy/fs-register-api-client/releases/tag/{release}'
+    'release_target': f'https://github.com/sr-murthy/financial-services-register-api/releases/tag/{release}'
 }
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # General (non-theme) HTML output options
-html_baseurl = 'https://fs-register-api-client.readthedocs.io'
-
-#html_sidebars = {
-#    "sources/getting-started": [],
-#    "sources/creating-continued-fractions": [],
-#    "sources/exploring-continued-fractions": [],
-#    "sources/sequences": [],
-#    "sources/contributing": [],
-#    #"sources/fs-register-api-client/*": ["sidebar-nav-bs"],
-#}
+html_baseurl = 'https://financial-services-register-api.readthedocs.io'
 
 # HTML theme options
 html_theme = 'furo'
-html_theme_options = {
-    #'collapse_navigation': True,
-    #'footer_end': ['author'],
-    #'footer_start': ['copyright', 'sphinx-version', 'theme-version'],
-    #'icon_links': [
-    #    {
-    #        'name': 'fs-register-api-client@GitHub',
-    #        'url': f'https://github.com/sr-murthy/fs-register-api-client',
-    #        'icon': 'fa-brands fa-github',
-    #    },
-    #],
-    #'navbar_persistent': ['search-button'],
-    #'navbar_align': 'content',
-    #'navbar_center': ['navbar-nav'],
-    #'navbar_end': ['theme-switcher', 'navbar-icon-links'],
-    #'navbar_start': ['navbar-logo'],
-    #'navigation_depth': 4,
-    #"primary_sidebar_end": ["indices", "sidebar-ethical-ads"],
-    #'secondary_sidebar_items': ['page-toc', 'edit-this-page', 'sourcelink'],
-    #'show_nav_level': 2,
-    #'show_toc_level': 2,
-    #'use_edit_page_button': False,
-}
+html_theme_options = {}
 
 #html_logo = '_static/logo.png'
 
@@ -254,4 +222,4 @@ html_show_sourcelink = True
 html_copy_source = True
 
 # Output file base name for HTML help builder - use the project name
-htmlhelp_basename = 'fs-register-api-client'
+htmlhelp_basename = 'financial-services-register-api'

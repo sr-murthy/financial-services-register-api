@@ -1,4 +1,4 @@
-__all__ = ['FS_REGISTER_API_CONSTANTS',]
+__all__ = ['FINANCIAL_SERVICES_REGISTER_API_CONSTANTS',]
 
 
 # -- IMPORTS --
@@ -11,16 +11,16 @@ from enum import Enum
 # -- Internal libraries --
 
 
-class FS_REGISTER_API_CONSTANTS(Enum):
+class FINANCIAL_SERVICES_REGISTER_API_CONSTANTS(Enum):
     """An enum to store FS Register API-level constants.
 
     Examples
     --------
-    >>> FS_REGISTER_API_CONSTANTS.API_VERSION.value
+    >>> FINANCIAL_SERVICES_REGISTER_API_CONSTANTS.API_VERSION.value
     'V0.1'
-    >>> FS_REGISTER_API_CONSTANTS.BASEURL.value
+    >>> FINANCIAL_SERVICES_REGISTER_API_CONSTANTS.BASEURL.value
     'https://register.fca.org.uk/services/V0.1'
-    >>> FS_REGISTER_API_CONSTANTS.RESOURCE_TYPES.value
+    >>> FINANCIAL_SERVICES_REGISTER_API_CONSTANTS.RESOURCE_TYPES.value
     {'firm': {'type_name': 'firm', 'endpoint_base': 'Firm'}, 'fund': {'type_name': 'fund', 'endpoint_base': 'CIS'}, 'individual': {'type_name': 'individual', 'endpoint_base': 'Individuals'}}
     """
 

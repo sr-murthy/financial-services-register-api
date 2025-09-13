@@ -13,10 +13,10 @@ Contributors and contributions are welcome. Please read these guidelines first.
 Git :fab:`github`
 =================
 
-The project homepage is on `GitHub <https://github.com/sr-murthy/fs-register-api-client>`_.
+The project homepage is on `GitHub <https://github.com/sr-murthy/financial-services-register-api>`_.
 
-Contributors can open pull requests from a fork targeting the parent `main branch <https://github.com/sr-murthy/fs-register-api-client/tree/main>`_. But it may be a good first step to create an `issue <https://github.com/sr-murthy/fs-register-api-client/issues>`_ or open
-a `discussion topic <https://github.com/sr-murthy/fs-register-api-client/discussions>`_.
+Contributors can open pull requests from a fork targeting the parent `main branch <https://github.com/sr-murthy/financial-services-register-api/tree/main>`_. But it may be a good first step to create an `issue <https://github.com/sr-murthy/financial-services-register-api/issues>`_ or open
+a `discussion topic <https://github.com/sr-murthy/financial-services-register-api/discussions>`_.
 
 A simple Git workflow, using a feature and/or fix branch created off the :code:`main` branch of your fork, is recommended.
 
@@ -49,7 +49,7 @@ Once you’ve forked the repository, you can clone your fork, e.g. over SSH:
 
 .. code:: python
 
-   git clone git+ssh://git@github.com/<fork user>/fs-register-api-client
+   git clone git+ssh://git@github.com/<fork user>/financial-services-register-api
 
 You can create additional remotes for the parent project to enable easier syncing, or you can simply create PRs directly against the parent project.
 
@@ -60,7 +60,7 @@ Dependencies & PDM :fas:`cubes`
 
 The package only depends on the `requests <https://requests.readthedocs.io/en/latest/>`_ library.
 
-Development dependencies are specified in the ``[tool.pdm.dev-dependencies]`` section of the `project TOML <https://github.com/sr-murthy/fs-register-api-client/blob/main/pyproject.toml>`_, but they are not mandatory. Of these, the most important are probably
+Development dependencies are specified in the ``[tool.pdm.dev-dependencies]`` section of the `project TOML <https://github.com/sr-murthy/financial-services-register-api/blob/main/pyproject.toml>`_, but they are not mandatory. Of these, the most important are probably
 the ``'test'`` dependencies, including `pytest <https://docs.pytest.org/en/8.0.x/>`_ and `pytest-cov <https://pytest-cov.readthedocs.io/>`_:
 
 .. code:: toml
@@ -75,7 +75,7 @@ the ``'test'`` dependencies, including `pytest <https://docs.pytest.org/en/8.0.x
 `PDM <https://pdm-project.org/latest>`_ is used (by myself, currently, the sole maintainer) to manage all dependencies and publish packages to PyPI. It is also used to automate certain tasks, such as running tests, as described in the section.
 
 There are no root-level :file:`requirements*.txt` files - but only a single (default, version-controlled, cross-platform)
-`pdm.lock <https://github.com/sr-murthy/fs-register-api-client/blob/main/pdm.lock>`_ lockfile, which defines metadata for all TOML-defined development dependencies, including the currently empty set of production dependencies, and their sub-dependencies etc. This can be used to install all development dependencies, including the project itself, in editable mode where available:
+`pdm.lock <https://github.com/sr-murthy/financial-services-register-api/blob/main/pdm.lock>`_ lockfile, which defines metadata for all TOML-defined development dependencies, including the currently empty set of production dependencies, and their sub-dependencies etc. This can be used to install all development dependencies, including the project itself, in editable mode where available:
 
 .. code:: shell
 
@@ -115,7 +115,7 @@ Tests :fas:`microscope`
 
 Tests are defined in the ``tests`` folder, and should be run with `pytest <https://pytest-cov.readthedocs.io/en/latest/>`_.
 
-For convenience different types of test targets are defined in the `Makefile <https://github.com/sr-murthy/fs-register-api-client/blob/main/Makefile>`_: ``lint`` for Ruff linting, ``doctests`` for running `doctests <https://docs.python.org/3/library/doctest.html>`_ and
+For convenience different types of test targets are defined in the `Makefile <https://github.com/sr-murthy/financial-services-register-api/blob/main/Makefile>`_: ``lint`` for Ruff linting, ``doctests`` for running `doctests <https://docs.python.org/3/library/doctest.html>`_ and
 ``unittests`` for running unittests and measuring coverage, using :program:`pytest` and the `pytest-cov <https://pytest-cov.readthedocs.io/en/latest/>`_ plugin:
 
 .. code:: shell
@@ -126,11 +126,11 @@ For convenience different types of test targets are defined in the `Makefile <ht
 
 Linting warnings should be addressed first, and any changes staged and committed.
 
-Unit tests can be run all at once using :command:`make unittests` or individually using :program:`pytest`, e.g. running the test class for the :py:class:`~fs_register_api_client.api.FsrApiClient` class:
+Unit tests can be run all at once using :command:`make unittests` or individually using :program:`pytest`, e.g. running the test class for the :py:class:`~fs_register_api_client.api.FinancialServicesRegisterApiClient` class:
 
 .. code:: shell
 
-   python -m pytest -sv tests/units/test_api.py::TestFsrApiClient
+   python -m pytest -sv tests/units/test_api.py::TestFinancialServicesRegisterApiClient
 
 The doctests serve as acceptance tests, and are best run after the unit tests. They can be run all at once using ``make doctests``, or individually by library using :command:`python -m doctest`, e.g. running all the doctests in :py:mod:`fs_register_api_client.api`:
 
@@ -150,16 +150,16 @@ This documentation site is written, built and deployed using `reStructuredText <
 CI :fas:`circle-play`
 =====================
 
-The CI pipelines are defined in the `CI YML <https://github.com/sr-murthy/fs-register-api-client/blob/main/.github/workflows/ci.yml>`_
-and the `CodeQL Analysis YML <https://github.com/sr-murthy/fs-register-api-client/blob/main/.github/workflows/codeql-analysis.yml>`_. Currently, pipelines for all branches include a tests stage that includes Ruff linting, unit tests, Python doctests, and in that order.
+The CI pipelines are defined in the `CI YML <https://github.com/sr-murthy/financial-services-register-api/blob/main/.github/workflows/ci.yml>`_
+and the `CodeQL Analysis YML <https://github.com/sr-murthy/financial-services-register-api/blob/main/.github/workflows/codeql-analysis.yml>`_. Currently, pipelines for all branches include a tests stage that includes Ruff linting, unit tests, Python doctests, and in that order.
 
 .. _contributing.versioning-and-releases:
 
 Versioning and Releases :fas:`upload`
 =====================================
 
-The `PyPI package <https://pypi.org/project/fs-register-api-client/>`_ is currently at version ``0.4.0``.
+The `PyPI package <https://pypi.org/project/financial-services-register-api/>`_ is currently at version ``0.4.0``.
 
-There is currently no dedicated pipeline for releases - both `GitHub releases <https://github.com/sr-murthy/fs-register-api-client/releases>`_ and `PyPI packages <https://pypi.org/project/fs-register-api-client>`_ are published manually, but both have the same version tag.
+There is currently no dedicated pipeline for releases - both `GitHub releases <https://github.com/sr-murthy/financial-services-register-api/releases>`_ and `PyPI packages <https://pypi.org/project/financial-services-register-api>`_ are published manually, but both have the same version tag.
 
 A separate release pipeline may be added as part of a future release.

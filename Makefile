@@ -1,11 +1,11 @@
 SHELL := /bin/bash
 
-REPO := https://github.com/sr-murthy/fs-register-api-client
+REPO := https://github.com/sr-murthy/financial-services-register-api
 
-PACKAGE_NAME := fs-register-api-client
+PACKAGE_NAME := financial-services-register-api
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 HEAD := $(shell git rev-parse --short=8 HEAD)
-PACKAGE_VERSION := $(shell grep __version__ src/fs_register_api_client/__version__.py | cut -d '=' -f 2 | xargs)
+PACKAGE_VERSION := $(shell grep __version__ src/financial_services_register_api/__version__.py | cut -d '=' -f 2 | xargs)
 
 PROJECT_ROOT := $(PWD)
 
@@ -41,7 +41,7 @@ version_extract:
 # Dependency management
 update_deps:
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Update all development dependencies, including documentation and production dependencies\n"
-	pdm update -v --dev --no-editable --no-self --update-all && pdm export -v -f requirements --dev -o docs/requirements.txt
+	pdm self update && pdm update -v --dev --no-editable --no-self --update-all && pdm export -v -f requirements --dev -o docs/requirements.txt
 
 # Linting
 lint: clean
@@ -52,7 +52,7 @@ lint: clean
 doctests: clean
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Running doctests in all core libraries\n"
 	cd "$(PROJECT_ROOT)" && \
-	python -m doctest -v src/fs_register_api_client/*.py
+	python -m doctest -v src/financial_services_register_api/*.py
 
 unittests: clean
 	@echo "\n$(PACKAGE_NAME)[$(BRANCH)@$(HEAD)]: Running package unit tests + measuring coverage\n"

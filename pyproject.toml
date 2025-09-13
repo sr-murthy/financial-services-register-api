@@ -8,8 +8,8 @@
 #
 #     https://packaging.python.org/en/latest/tutorials/packaging-projects/
 #
-name = "fs-register-api-client"
-description = "Lightweight Python client library for the UK Financial Services Register RESTful API"
+name = "financial-services-register-api"
+description = "Python client library for the UK Financial Services Register RESTful API"
 
 authors = [
     {name = "S. R. Murthy", email = "s.murthy@tutanota.com"},
@@ -21,7 +21,7 @@ maintainers = [
 
 dynamic = ["version"]
 
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 
 license = {file = "LICENSE"}
 
@@ -35,20 +35,18 @@ keywords = [
     "financial conduct authority",
     "financial data",
     "financial regulation",
-    "financial services",
     "financial services register",
+    "financial services",
     "prudential regulation authority",
     "regulated markets",
     "restful api",
     "uk",
+    "united kingdom",
 ]
 
 classifiers = [
         "Environment :: Console",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
@@ -70,9 +68,9 @@ requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [project.urls]
-Homepage = "https://fs-register-api-client.readthedocs.io/index.html"
-Documentation = "https://fs-register-api-client.readthedocs.io"
-Repository = "https://github.com/sr-murthy/fs-register-api-client"
+Homepage = "https://github.com/sr-murthy/financial-services-register-api"
+Documentation = "https://github.com/sr-murthy/financial-services-register-api"
+Repository = "https://github.com/sr-murthy/financial-services-register-api"
 
 # For working with PDM, including configuration and usage see:
 #
@@ -86,7 +84,7 @@ distribution = true
 [tool.pdm.build]
 package-dir = "src"
 includes = [
-    "src/fs-register-api-client",
+    "src/financial_services_register_api",
 ]
 # File patterns to exclude, the paths are relative to the project root.
 excludes = [
@@ -111,7 +109,7 @@ build = [
 ]
 docs = [
     "myst-parser",
-    "furo",
+    "furo==2024.04.27",
     "Sphinx",
     "sphinx-autobuild",
     "sphinx-copybutton",
@@ -146,7 +144,7 @@ unittests = {shell = "make unittests", help = "Run unit tests & measure coverage
 
 [tool.pdm.version]
 source = "file"
-path = "src/fs-register-api-client/__version__.py"
+path = "src/financial_services_register_api/__version__.py"
 
 # For ``pytest`` configuration, including TOML-specific configuration see:
 #

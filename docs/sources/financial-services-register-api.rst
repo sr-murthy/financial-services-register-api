@@ -2,11 +2,11 @@
 
    :google-site-verification: 3F2Jbz15v4TUv5j0vDJAA-mSyHmYIJq0okBoro3-WMY
 
-=================================
-Understanding the FS Register API
-=================================
+=================================================
+Understanding the Financial Services Register API
+=================================================
 
-The package functionality reflects the current version (``V0.1``) of the `FS Register <https://www.fca.org.uk/firms/financial-services-register>`_ `API <https://register.fca.org.uk/Developer/s/>`_. The API is documented but access requires registration.
+The package functionality reflects the current version (``V0.1``) of the `Financial Services Register <https://www.fca.org.uk/firms/financial-services-register>`_ `API <https://register.fca.org.uk/Developer/s/>`_. The API is documented but access requires registration.
 
 The base URL for all API requests is:
 
@@ -32,7 +32,7 @@ There are also search endpoints that allow a search for *(a)* any of these resou
 Request Headers
 ===============
 
-The FS Register API is read-only - all requests must use ``GET``, and include headers containing the API username and key:
+For developers and end users the API, and this Python client library, is read-only - all requests must use ``GET``, and include headers containing the API username and key:
 
 .. code:: shell
 
