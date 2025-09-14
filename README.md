@@ -32,4 +32,4 @@ See the [Sphinx documentation](https://financial-services-register-api.readthedo
 * [understanding the FS Register API](https://financial-services-register-api.readthedocs.io/en/latest/sources/financial-services-register-api.html)
 * [usage](https://financial-services-register-api.readthedocs.io/en/latest/sources/usage.html)
 * [contributing](https://financial-services-register-api.readthedocs.io/en/latest/sources/contributing.html)
-* [API reference](https://financial-services-register-api.readthedocs.io/en/latest/sources/api-references.html)
+* [API reference](https://financial-services-register-api.readthedocs.io/en/latest/sources/api-reference.html)
