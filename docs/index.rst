@@ -23,6 +23,8 @@ The Financial Services Register (or simply, the Register), is a **public** datab
 
 To learn more about the API please consult the `official documentation <https://register.fca.org.uk/Developer/s/>`_, or start :doc:`here <sources/financial-services-register-api>`.
 
+If you're interested in contributing please start :doc:`here <sources/contributing>`.
+
 
 .. toctree::
    :maxdepth: 1
@@ -31,6 +33,7 @@ To learn more about the API please consult the `official documentation <https://
    sources/financial-services-register-api
    sources/usage
    sources/api-reference
+   sources/contributing
 
 Indices and tables
 ==================
