@@ -8,7 +8,7 @@ financial-services-register-api
 
 A Python client library for the UK `Financial Services Register <https://register.fca.org.uk/s/>`_ `RESTful API <https://register.fca.org.uk/Developer/s/>`_.
 
-The `PyPI package <https://pypi.org/project/financial-services-register-api>`_ is currently at version `1.1.0`.
+The `package <https://pypi.org/project/financial-services-register-api>`_ is currently at version `1.2.0`.
 
 .. note::
 
@@ -23,19 +23,17 @@ The Financial Services Register (or simply, the Register), is a **public** datab
 
 To learn more about the API please consult the `official documentation <https://register.fca.org.uk/Developer/s/>`_, or start :doc:`here <sources/financial-services-register-api>`.
 
-To get started with this package you can start :doc:`here <sources/getting-started>`.
+If you're interested in contributing please start :doc:`here <sources/contributing>`.
 
-If you're interested in contributing please consult the :doc:`contributing guidelines <sources/contributing>`.
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
 
    sources/financial-services-register-api
-   sources/getting-started
    sources/usage
-   sources/contributing
    sources/api-reference
+   sources/contributing
 
 Indices and tables
 ==================
