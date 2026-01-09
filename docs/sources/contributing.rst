@@ -64,6 +64,6 @@ The CI workflows are defined `here <https://github.com/sr-murthy/financial-servi
 Releases :fas:`upload`
 ======================
 
-The `package <https://pypi.org/project/financial-services-register-api/>`_ is currently at version ``1.2.0``.
+The `package <https://pypi.org/project/financial-services-register-api/>`_ is currently at version ``1.3.0``.
 
 Releases are created and published (to PyPI and GitHub) manually.
