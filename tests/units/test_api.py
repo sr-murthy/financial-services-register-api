@@ -904,7 +904,7 @@ class TestFinancialServicesRegisterApiClient(_TestFinancialServicesRegisterApi):
         assert isinstance(recv_prn, str)
         assert recv_prn
 
-        recv_prn = test_client.search_prn('northern trust high dividend esg world equity feeder')
+        recv_prn = test_client.search_prn('northern trust developed real estate index')
         assert isinstance(recv_prn, str)
         assert recv_prn
 

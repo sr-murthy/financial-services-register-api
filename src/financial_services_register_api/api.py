@@ -1350,9 +1350,9 @@ class FinancialServicesRegisterApiClient:
         --------
         >>> import os
         >>> client = FinancialServicesRegisterApiClient(os.environ['API_USERNAME'], os.environ['API_KEY'])
-        >>> client.search_prn('Northern Trust High Dividend ESG World Equity Feeder Fund')
-        '913937'
-        >>> res = client.search_prn('Northern Trust')
+        >>> client.search_prn('jupiter asia pacific income fund')
+        '1044298'
+        >>> res = client.search_prn('northern trust')
         >>> assert isinstance(res, list)
         >>> assert all(isinstance(rec, dict) for rec in res)
         >>> client.search_prn('nonexistent fund')
