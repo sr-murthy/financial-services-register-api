@@ -5,8 +5,7 @@
 [![codecov](https://img.shields.io/badge/codecov-100%25-green)](https://codecov.io/github/sr-murthy/financial-services-register-api)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org)
-[![License: MPL
-2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-brightgreen)](https://opensource.org/license/gpl-3.0)
 [![Docs](https://readthedocs.org/projects/financial-services-register-api/badge/?version=latest)](https://financial-services-register-api.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://img.shields.io/pypi/v/financial-services-register-api?logo=python&color=41bb13)](https://pypi.org/project/financial-services-register-api)
 ![PyPI Downloads](https://static.pepy.tech/badge/fsrapiclient)
@@ -15,9 +14,9 @@
 
 # financial-services-register-api
 
-A lightweight Python client library for the UK [Financial Services Register](https://register.fca.org.uk/s/) [RESTful API](https://register.fca.org.uk/Developer/s/).
+A lightweight Python client library for the UK [Financial Services Register](https://register.fca.org.uk/s/) [API](https://register.fca.org.uk/Developer/s/).
 
-The [PyPI package](https://pypi.org/project/financial-services-register-api) is currently at version `1.3.0`.
+The [PyPI package](https://pypi.org/project/financial-services-register-api) is currently at version `1.3.1`.
 
 > [!NOTE]
 > The new package `financial-services-register-api` supersedes the older package `fsrapiclient`, which will no longer be published. Existing versions of the older package may be retracted in the future. Please use the new package.

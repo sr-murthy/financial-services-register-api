@@ -6,7 +6,7 @@
 financial-services-register-api
 ===============================
 
-A Python client library for the UK `Financial Services Register <https://register.fca.org.uk/s/>`_ `RESTful API <https://register.fca.org.uk/Developer/s/>`_.
+A Python client library for the UK `Financial Services Register <https://register.fca.org.uk/s/>`_ `API <https://register.fca.org.uk/Developer/s/>`_.
 
 The `package <https://pypi.org/project/financial-services-register-api>`_ is currently at version `1.3.1`.
 
