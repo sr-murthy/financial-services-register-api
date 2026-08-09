@@ -10,6 +10,8 @@
 [![PyPI version](https://img.shields.io/pypi/v/financial-services-register-api?logo=python&color=41bb13)](https://pypi.org/project/financial-services-register-api)
 ![PyPI Downloads](https://static.pepy.tech/badge/fsrapiclient)
 
+[![Not By AI](docs/_static/Developed-By-a-Human-Not-By-AI-Badge-black@2x.png)](docs/_static/Developed-By-a-Human-Not-By-AI-Badge-black@2x.png)
+
 </div>
 
 # financial-services-register-api
